@@ -22,7 +22,7 @@
 #   CONCRETE STRUCT DEFINITION
 #
 ################################################################################
-mutable struct Unitcell{S,B,name} <: AbstractUnitcell{S,B,name}
+mutable struct Unitcell{S,B,name} <: AbstractUnitcell{S,B}
 
     # basis vectors of the Bravais lattice
     lattice_vectors	:: Vector{Vector{Float64}}
@@ -230,3 +230,20 @@ function loadUnitcell(
 
     return loadUnitcell(Unitcell, fn, group)
 end
+
+
+"""
+    function name(uc::Unitcell) where {...}
+
+Function for returning the name of the unitcell `uc`.
+
+# Examples
+
+```julia-REPL
+julia> name(diamond_unitcell)
+:diamond
+```
+"""
+name(:: Unitcell{S,B,name}) where {S,B,name} = name
+
+export name

@@ -950,23 +950,3 @@ end
 
 # export the function
 export vector
-
-
-"""
-    function name(l::AbstractLattice) ::Vector{Float64} where {...}
-
-Function for returning the name of the lattice `l`.
-
-# Examples
-
-```julia-REPL
-julia> name(mylattice)
-:mylattice
-```
-"""
-function name(
-            lattice :: LA
-        ) where {name,U<:AbstractUnitcell, SL,BL<:AbstractBond,LA<:AbstractLattice{SL,BL,U,name}}
-
-    name
-end

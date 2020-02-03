@@ -46,15 +46,25 @@ mutable struct Lattice{S,B,U,name} <: AbstractLattice{S,B,U,name}
 
 end
 
-# Use `name = :UNKNOWN` as default when name is not given.
+# Use `name = :UNKNOWN` as default when unicell is unnamed
 function Lattice{S,B,U}(
         lattice_vectors::Vector{Vector{Float64}},
         sites::Vector{LS},
         bonds::Vector{LB},
         unitcell::U
-    ) where {LS,LB,S<:AbstractSite,B<:AbstractBond,name,U<:Unitcell{S,B,name}}
+    ) where {LS,LB,U<:Unitcell}
+    Lattice{S,B,U,:UNKNOWN}(lattice_vectors, sites, bonds, unitcell)
+end
+# Get name from Unitcell
+function Lattice{S,B,U}(
+        lattice_vectors::Vector{Vector{Float64}},
+        sites::Vector{LS},
+        bonds::Vector{LB},
+        unitcell::Unitcell{S, B, name}
+    ) where {LS,LB,S<:AbstractSite,B<:AbstractBond,name}
     Lattice{S,B,U,name}(lattice_vectors, sites, bonds, unitcell)
 end
+
 
 # export the concrete type
 export Lattice
@@ -272,3 +282,20 @@ function loadLattice(
 
     return loadLattice(Lattice, fn, group)
 end
+
+
+"""
+    function name(l::Lattice)
+
+Function for returning the name of the lattice `l`.
+
+# Examples
+
+```julia-REPL
+julia> name(mylattice)
+:mylattice
+```
+"""
+name(:: Lattice{S, B, U, name}) where {S, B, U, name} = name
+
+export name
