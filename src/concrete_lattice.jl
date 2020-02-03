@@ -52,7 +52,7 @@ function Lattice{S,B,U}(
         sites::Vector{LS},
         bonds::Vector{LB},
         unitcell::U
-    ) where {LS,LB,U<:Unitcell}
+    ) where {LS,LB,S,B,U<:AbstractUnitcell{S,B}}
     Lattice{S,B,U,:UNKNOWN}(lattice_vectors, sites, bonds, unitcell)
 end
 # Get name from Unitcell
@@ -60,8 +60,8 @@ function Lattice{S,B,U}(
         lattice_vectors::Vector{Vector{Float64}},
         sites::Vector{LS},
         bonds::Vector{LB},
-        unitcell::Unitcell{S, B, name}
-    ) where {LS,LB,S<:AbstractSite,B<:AbstractBond,name}
+        unitcell::U
+    ) where {LS,LB,S<:AbstractSite,B<:AbstractBond,name,U<:Unitcell{S, B, name}}
     Lattice{S,B,U,name}(lattice_vectors, sites, bonds, unitcell)
 end
 
