@@ -36,7 +36,8 @@ abstract type AbstractLattice{
         U <: AbstractUnitcell{SU,BU} where {
             SU <: AbstractSite{LUS,DU} where {LUS,DU},
             BU <: AbstractBond{LUB,NU} where {LUB,NU},
-        }
+        },
+        name
     } end
 
 # export the type
@@ -949,3 +950,23 @@ end
 
 # export the function
 export vector
+
+
+"""
+    function name(l::AbstractLattice) ::Vector{Float64} where {...}
+
+Function for returning the name of the lattice `l`.
+
+# Examples
+
+```julia-REPL
+julia> name(mylattice)
+:mylattice
+```
+"""
+function name(
+            lattice :: LA
+        ) where {name,U<:AbstractUnitcell, SL,BL<:AbstractBond,LA<:AbstractLattice{SL,BL,U,name}}
+
+    name
+end

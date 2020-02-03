@@ -30,7 +30,7 @@
 #   CONCRETE STRUCT DEFINITION
 #
 ################################################################################
-mutable struct Lattice{S,B,U} <: AbstractLattice{S,B,U}
+mutable struct Lattice{S,B,U,name} <: AbstractLattice{S,B,U,name}
 
     # basis vectors of the Bravais lattice
     lattice_vectors	:: Vector{Vector{Float64}}
@@ -44,6 +44,16 @@ mutable struct Lattice{S,B,U} <: AbstractLattice{S,B,U}
     # unitcell
     unitcell        :: U
 
+end
+
+# Use `name = :UNKNOWN` as default when name is not given.
+function Lattice{S,B,U}(
+        lattice_vectors::Vector{Vector{Float64}},
+        sites::Vector{S},
+        bonds::Vector{B},
+        unitcell::U
+    ) where {S<:AbstractSite,B<:AbstractBond,U}
+    Lattice{S,B,U,:UNKNOWN}(lattice_vectors, sites, bonds, unitcell)
 end
 
 # export the concrete type
@@ -65,15 +75,15 @@ export Lattice
 # default constructor interface
 # used for creation of new lattices
 function newLattice(
-            ::Type{Lattice{S,B,U}},
+            LT::Type{<: Lattice{S,B,U}},
             lattice_vectors :: Vector{<:Vector{<:Real}},
             sites           :: Vector{S},
             bonds           :: Vector{B},
             unitcell        :: U
-        ) :: Lattice{S,B,U} where {D,N,LS,LB,U,S<:AbstractSite{LS,D},B<:AbstractBond{LB,N}}
+        ) :: Lattice{S,B,U,name} where {D,N,LS,LB,U,S<:AbstractSite{LS,D},B<:AbstractBond{LB,N}}
 
     # return a newly created object
-    Lattice{S,B,U}(lattice_vectors, sites, bonds, unitcell)
+    LT(lattice_vectors, sites, bonds, unitcell)
 end
 
 
