@@ -47,22 +47,22 @@ mutable struct Lattice{S,B,U,name} <: AbstractLattice{S,B,U}
 end
 
 # Use `name = :UNKNOWN` as default when unicell is unnamed
-function Lattice{S,B,U}(
+function Lattice{LS,LB,U}(
         lattice_vectors::Vector{Vector{Float64}},
         sites::Vector{LS},
         bonds::Vector{LB},
         unitcell::U
     ) where {LS,LB,S,B,U<:AbstractUnitcell{S,B}}
-    Lattice{S,B,U,:UNKNOWN}(lattice_vectors, sites, bonds, unitcell)
+    Lattice{LS,LB,U,:UNKNOWN}(lattice_vectors, sites, bonds, unitcell)
 end
 # Get name from Unitcell
-function Lattice{S,B,U}(
+function Lattice{LS,LB,U}(
         lattice_vectors::Vector{Vector{Float64}},
         sites::Vector{LS},
         bonds::Vector{LB},
         unitcell::U
-    ) where {LS,LB,S<:AbstractSite,B<:AbstractBond,name,U<:Unitcell{S, B, name}}
-    Lattice{S,B,U,name}(lattice_vectors, sites, bonds, unitcell)
+    ) where {LS,LB,S,B,name,U<:Unitcell{S, B, name}}
+    Lattice{LS,LB,U,name}(lattice_vectors, sites, bonds, unitcell)
 end
 
 
