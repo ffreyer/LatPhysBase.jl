@@ -233,17 +233,17 @@ end
 
 
 """
-    function name(uc::Unitcell) where {...}
+    function getname(uc::Unitcell) where {...}
 
 Function for returning the name of the unitcell `uc`.
 
 # Examples
 
 ```julia-REPL
-julia> name(diamond_unitcell)
+julia> getname(diamond_unitcell)
 :diamond
 ```
 """
-name(:: Unitcell{S,B,name}) where {S,B,name} = name
+getname(:: Unitcell{S,B,name}) where {S,B,name} = name
 
-export name
+export getname

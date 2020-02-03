@@ -30,7 +30,7 @@
 #   CONCRETE STRUCT DEFINITION
 #
 ################################################################################
-mutable struct Lattice{S,B,U,name} <: AbstractLattice{S,B,U,name}
+mutable struct Lattice{S,B,U,name} <: AbstractLattice{S,B,U}
 
     # basis vectors of the Bravais lattice
     lattice_vectors	:: Vector{Vector{Float64}}
@@ -90,7 +90,7 @@ function newLattice(
             sites           :: Vector{S},
             bonds           :: Vector{B},
             unitcell        :: U
-        ) :: Lattice{S,B,U,name} where {D,N,LS,LB,U,S<:AbstractSite{LS,D},B<:AbstractBond{LB,N}}
+        ) where {D,N,LS,LB,U,S<:AbstractSite{LS,D},B<:AbstractBond{LB,N}}
 
     # return a newly created object
     LT(lattice_vectors, sites, bonds, unitcell)
@@ -285,7 +285,7 @@ end
 
 
 """
-    function name(l::Lattice)
+    function getname(l::Lattice)
 
 Function for returning the name of the lattice `l`.
 
@@ -296,6 +296,6 @@ julia> name(mylattice)
 :mylattice
 ```
 """
-name(:: Lattice{S, B, U, name}) where {S, B, U, name} = name
+getname(:: Lattice{S, B, U, name}) where {S, B, U, name} = name
 
-export name
+export getname

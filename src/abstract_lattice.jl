@@ -36,8 +36,7 @@ abstract type AbstractLattice{
         U <: AbstractUnitcell{SU,BU} where {
             SU <: AbstractSite{LUS,DU} where {LUS,DU},
             BU <: AbstractBond{LUB,NU} where {LUB,NU},
-        },
-        name
+        }
     } end
 
 # export the type
