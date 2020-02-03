@@ -22,7 +22,7 @@
 #   CONCRETE STRUCT DEFINITION
 #
 ################################################################################
-mutable struct Unitcell{S,B} <: AbstractUnitcell{S,B}
+mutable struct Unitcell{S,B,name} <: AbstractUnitcell{S,B,name}
 
     # basis vectors of the Bravais lattice
     lattice_vectors	:: Vector{Vector{Float64}}
@@ -33,6 +33,14 @@ mutable struct Unitcell{S,B} <: AbstractUnitcell{S,B}
     # list of bonds
     bonds			:: Vector{B}
 
+end
+
+function Unitcell{S,B}(
+        lattice_vectors::Vector{Vector{Float64}},
+        sites::Vector{S},
+        bonds::Vector{B}
+    ) where {S <: AbstractSite, B <: AbstractBond}
+    Unitcell{S,B,:UNKNOWN}(lattice_vectors, sites, bonds)
 end
 
 # export the concrete type
@@ -54,14 +62,14 @@ export Unitcell
 # default constructor interface
 # used for creation of new unitcells
 function newUnitcell(
-            :: Type{Unitcell{S,B}},
+            UCT:: Type{<: Unitcell{S,B}},
             lattice_vectors :: Vector{<:Vector{<:Real}},
             sites           :: Vector{S},
             bonds           :: Vector{B}
         ) :: Unitcell{S,B} where {D,N,LS,LB,S<:AbstractSite{LS,D},B<:AbstractBond{LB,N}}
 
     # return a newly created object
-    Unitcell{S,B}(lattice_vectors, sites, bonds)
+    UCT(lattice_vectors, sites, bonds)
 end
 
 

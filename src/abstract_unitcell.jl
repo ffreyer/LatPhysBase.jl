@@ -24,7 +24,8 @@
 ################################################################################
 abstract type AbstractUnitcell{
         S <: AbstractSite{LS,D} where {LS,D},
-        B <: AbstractBond{LB,N} where {LB,N}
+        B <: AbstractBond{LB,N} where {LB,N},
+        name
     } end
 
 # export the type
@@ -864,3 +865,25 @@ end
 
 # export the function
 export vector
+
+
+"""
+    function name(uc::Unitcell) where {...}
+
+Function for returning the name of the unitcell `uc`.
+
+# Examples
+
+```julia-REPL
+julia> name(diamond_unitcell)
+:diamond
+```
+"""
+function name(
+            :: U
+        ) where {name,S,B,U<:AbstractUnitcell{S,B,name}}
+
+    name
+end
+
+export name

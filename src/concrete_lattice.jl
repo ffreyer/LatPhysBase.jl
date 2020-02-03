@@ -49,11 +49,11 @@ end
 # Use `name = :UNKNOWN` as default when name is not given.
 function Lattice{S,B,U}(
         lattice_vectors::Vector{Vector{Float64}},
-        sites::Vector{S},
-        bonds::Vector{B},
+        sites::Vector{LS},
+        bonds::Vector{LB},
         unitcell::U
-    ) where {S<:AbstractSite,B<:AbstractBond,U}
-    Lattice{S,B,U,:UNKNOWN}(lattice_vectors, sites, bonds, unitcell)
+    ) where {LS,LB,S<:AbstractSite,B<:AbstractBond,name,U<:Unitcell{S,B,name}}
+    Lattice{S,B,U,name}(lattice_vectors, sites, bonds, unitcell)
 end
 
 # export the concrete type
